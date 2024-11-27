@@ -89,6 +89,22 @@ class Inventory {
         addTopKItems(newItem);
     }
 
+    public void updateItem(String id, int quantity, int threshold) throws Exception {
+        if (!itemCategory.containsKey(id)) {
+            throw new Exception("Exception: Item with this ID does not exist");
+        }
+
+        try {
+            Item item = getItem(id);
+            item.setQuantity(quantity);
+            item.setThreshold(threshold);
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     // Used to get all the items inside a specific category
     public ArrayList<Item> getCategory(String category) throws Exception {
         if (!categoryInventory.containsKey(category)) {
@@ -239,6 +255,25 @@ public class Main {
             catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }
+
+        System.out.println("\nUpdating item with ID 2");
+        try {
+            inventory.updateItem("2", 100, 50);
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Item after updating");
+        try {
+            Item updated = inventory.getItem("2");
+            System.out.println("Updated quantity and threshold: " + updated.getQuantity() + " " + updated.getThreshold());
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         System.out.println("\nDeleting item with ID 2");
